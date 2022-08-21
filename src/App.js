@@ -26,9 +26,25 @@ const App = () => {
     }
   ]
 
+  /**
+   * searchTerm represents the current state
+   * setSearchTerm function to update this state
+   * useState returns an array with a state and a function
+   * useState uses array destructuring to assign each value/function to a variable more concisely
+   */
+  /**
+   * life state up so that it can be shared with other components
+   */
+  const [searchTerm, setSearchTerm] = React.useState('')
+
   const handleSearch = event => {
     console.log(event.target.value)
+    setSearchTerm(event.target.value)
   }
+
+  const searchedStories = stories.filter(story => {
+    return story.title.toLowerCase().includes(searchTerm)
+  })
 
 
   return (
@@ -38,38 +54,18 @@ const App = () => {
       <Search onSearch={handleSearch} />
       <hr />
 
-      <List list={stories} />
-      <List list={stories} />
+      <List list={searchedStories} />
+      <List list={searchedStories} />
     </div>
   )
 }
 
-const Search = props => {
-  /**
-   * searchTerm represents the current state
-   * setSearchTerm function to update this state
-   * useState returns an array with a state and a function
-   * useState uses array destructuring to assign each value/function to a variable more concisely
-   */
-  const [searchTerm, setSearchTerm] = React.useState('')
-
-  // do something in between 
-  const handleChange = event => {
-    setSearchTerm(event.target.value)
-    props.onSearch(event)
-  };
-
-  return (
-    <div>
-      <label htmlFor='search'>Search: </label>
-      <input id='search' type='text' onChange={handleChange} />
-
-      <p>
-        Searching for <strong>{searchTerm}</strong>
-      </p>
-    </div>
-  )
-}
+const Search = props => (
+  <div>
+    <label htmlFor='search'>Search: </label>
+    <input id='search' type='text' onChange={props.onSearch} />
+  </div>
+)
 
 const List = props =>
   props.list.map(item =>
