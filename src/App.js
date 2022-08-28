@@ -1,3 +1,4 @@
+import { isFocusable } from '@testing-library/user-event/dist/utils';
 import React from 'react';
 import './App.css';
 
@@ -34,7 +35,6 @@ const useSemiPersistentState = (key, initialState) => {
  * used to implement React components
  */
 const App = () => {
-
   const stories = [
     {
       title: 'React',
@@ -90,18 +90,29 @@ const InputWithLabel = ({
   type = 'text',
   onInputChange,
   children
-}) => (
-  <>
-    <label htmlFor={id}>{children}</label>
-    &nbsp;
-    <input
-      id={id}
-      type={type}
-      value={value}
-      onChange={onInputChange}
-    />
-  </>
-)
+}) => {
+  const inputRef = React.useRef()
+
+  React.useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [isFocused])
+
+  return (
+    <>
+      <label htmlFor={id}>{children}</label>
+      &nbsp;
+      <input
+        ref={inputRef}
+        id={id}
+        type={type}
+        value={value}
+        onChange={onInputChange}
+      />
+    </>
+  )
+}
 
 // const Search = ({ search, onSearch }) => (
 //   <>
