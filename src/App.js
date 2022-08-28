@@ -76,6 +76,19 @@ const App = () => {
   )
 }
 
+const InputWithLabel = ({ id, label, value, onInputChange }) => (
+  <>
+  <label htmlFor={id}>{label}</label>
+  &nbsp;
+  <input 
+  id = {id}
+  type='text'
+  value={value}
+  onChange={onInputChange}
+  />
+  </>
+)
+
 const Search = ({ search, onSearch }) => (
   <>
     <label htmlFor='search'>Search: </label>
