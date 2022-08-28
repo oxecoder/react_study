@@ -1,10 +1,38 @@
 import React from 'react';
 import './App.css';
 
+const useSemiPersistentState = (key, initialState) => {
+  /**
+   * searchTerm represents the current state
+   * setSearchTerm function to update this state
+   * useState returns an array with a state and a function
+   * useState uses array destructuring to assign each value/function to a variable more concisely
+   */
+  /**
+   * life state up so that it can be shared with other components
+   */
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState
+  )
+
+  /**
+   * since the key comes from outside, the custom hook assusmes that it could change,
+   * so it needs to be included in the dependency array of the useEffect hook.
+   * Without it, the side-effect may run with an outdated key
+   */
+  React.useEffect(() => {
+    // function where the side-effect ocuures
+    localStorage.setItem(key, value)
+  }, // array of variables, which if one of the variables changes the function for the side-effect is called. 
+    [value, key])
+
+  return [value, setValue]
+}
+
+
 /**
  * used to implement React components
  */
-
 const App = () => {
 
   const stories = [
@@ -26,16 +54,7 @@ const App = () => {
     }
   ]
 
-  /**
-   * searchTerm represents the current state
-   * setSearchTerm function to update this state
-   * useState returns an array with a state and a function
-   * useState uses array destructuring to assign each value/function to a variable more concisely
-   */
-  /**
-   * life state up so that it can be shared with other components
-   */
-  const [searchTerm, setSearchTerm] = React.useState('React')
+  const [searchTerm, setSearchTerm] = useSemiPersistentState('search', 'React')
 
   const handleSearch = event => {
     setSearchTerm(event.target.value)
