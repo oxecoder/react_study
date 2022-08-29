@@ -97,7 +97,7 @@ const App = () => {
 
   const [stories, dispatchStories] = React.useReducer(
     storiesReducer,
-    { date: [], isLoading: false, isError: false }
+    { data: [], isLoading: false, isError: false }
   )
 
   React.useEffect(() => {
@@ -106,7 +106,7 @@ const App = () => {
     getAsyncStories().then(result => {
       dispatchStories({
         type: 'STORIES_FETCH_SUCCESS',
-        payload: result.data.stoires
+        payload: result.data.stories
 
       })
     }).catch(() => dispatchStories({ type: 'STORIES_FETCH_FAILURE' }))
