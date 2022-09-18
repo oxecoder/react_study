@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import renderer from 'react-test-renderer';
 import App, { Item, List, InputWithLabel } from './App';
+import axios from 'axios'
+
+jest.mock('axios')
 
 /**
  * unit testing
@@ -54,3 +57,39 @@ describe('Item', () => {
 
   })
 })
+
+// describe('App', () => {
+//   it('succeeds fetching data with list', () => {
+//     const list = [
+//       {
+//         title: 'React',
+//         url: 'https://reactjs.org/',
+//         author: 'Jordan Walke',
+//         num_comments: 3,
+//         points: 4,
+//         objectID: 0,
+//       },
+//       {
+//         title: 'Redux',
+//         url: 'https://redux.js.org/',
+//         author: 'Dan Abramov, Andrew Clark',
+//         num_comments: 2,
+//         points: 5,
+//         objectID: 1,
+//       }
+//     ]
+
+//     const promise = Promise.resolve({
+//       data: {
+//         hits: list
+//       }
+//     })
+
+//     axios.get.mockImplementationOnce(() => promise)
+
+//     const component = renderer.create(<App />)
+
+//     expect(component.root.findByType(List).props.list).toEqual(list)
+//   })
+
+// })
