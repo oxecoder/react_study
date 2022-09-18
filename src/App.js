@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+export { InputWithLabel, List, Item }
 
 const useSemiPersistentState = (key, initialState) => {
   /**
